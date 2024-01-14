@@ -8,10 +8,13 @@ import Body from "./Body";
   
 
 
+
 const Applayout=()=>{
    return(<div>
     <Header/>
    <Body/>
+
+ 
    </div>)
 }
 

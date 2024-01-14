@@ -1,7 +1,7 @@
-import { IMAGE_URL } from "../Constants/utils";
 
 
-const RestrauntCard = ({resdata} ) => {  
+
+const RestrauntCard = (resdata ) => {  
 
     const { name, cuisines, avgRating, costForTwo, sla,cloudinaryImageId } = resdata;
     const { deliveryTime } = sla;

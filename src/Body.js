@@ -1,4 +1,4 @@
-
+import restrautList  from "../constant/mockdata";
 
 import RestrauntCard from "./RestrauntCard";
 
@@ -6,7 +6,9 @@ import RestrauntCard from "./RestrauntCard";
 const Body=()=>{
     return(
         <div className="body">
-         {resList.info.map((restraunt)=><RestrauntCard id={restraunt.id} resdata={restraunt}/>)}
+       {restrautList.map((restaurant) => {
+        return <RestrauntCard {...restaurant.data} key={restaurant.data.id} />;
+      })}
         </div>
     )
 }
