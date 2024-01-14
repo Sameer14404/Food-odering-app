@@ -18,7 +18,7 @@ const RestrauntCard = (resdata ) => {
         <h4>{avgRating}</h4>
         <h4>{costForTwo}</h4>
      
-        <h4>{deliveryTime}</h4>
+        <h4>{`delivery time - ${deliveryTime} min`}</h4>
       </div>
    
     

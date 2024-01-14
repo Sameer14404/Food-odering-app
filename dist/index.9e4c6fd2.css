@@ -22,8 +22,9 @@
 }
 
 .body {
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
-  display: flex;
+  display: grid;
 }
 
 .body .res-container {
