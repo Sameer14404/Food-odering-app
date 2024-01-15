@@ -672,7 +672,7 @@ const reslist=[
       "Thalis",
       "Biryani"
     ],
-    "avgRating": 4.4,
+    "avgRating": 3.4,
     "parentId": "76139",
     "avgRatingString": "4.4",
     "totalRatingsString": "1K+",
@@ -956,7 +956,7 @@ const reslist=[
     "cuisines": [
       "Sweets"
     ],
-    "avgRating": 4.6,
+    "avgRating": 2.6,
     "veg": true,
     "parentId": "4700",
     "avgRatingString": "4.6",
@@ -1031,90 +1031,7 @@ const reslist=[
     }
   }},
 
-  {info: {
-    "id": "48230",
-    "name": "Kanti Sweets",
-    "cloudinaryImageId": "u0hhfifwmpsnobytv2yf",
-    "locality": "Brigade Road",
-    "areaName": "Brigade Road",
-    "costForTwo": "₹150 for two",
-    "cuisines": [
-      "Sweets"
-    ],
-    "avgRating": 4.6,
-    "veg": true,
-    "parentId": "4700",
-    "avgRatingString": "4.6",
-    "totalRatingsString": "5K+",
-    "sla": {
-      "deliveryTime": 22,
-      "lastMileTravel": 2,
-      "serviceability": "SERVICEABLE",
-      "slaString": "20-25 mins",
-      "lastMileTravelString": "2.0 km",
-      "iconType": "ICON_TYPE_EMPTY"
-    },
-    "availability": {
-      "nextCloseTime": "2024-01-14 22:00:00",
-      "opened": true
-    },
-    "badges": {
-      "imageBadges": [
-        {
-          "imageId": "v1695133679/badges/Pure_Veg111.png",
-          "description": "pureveg"
-        }
-      ]
-    },
-    "isOpen": true,
-    "type": "F",
-    "badgesV2": {
-      "entityBadges": {
-        "imageBased": {
-          "badgeObject": [
-            {
-              "attributes": {
-                "description": "pureveg",
-                "imageId": "v1695133679/badges/Pure_Veg111.png"
-              }
-            }
-          ]
-        },
-        "textBased": {
-          
-        },
-        "textExtendedBadges": {
-          
-        }
-      }
-    },
-    "loyaltyDiscoverPresentationInfo": {
-      "logoCtx": {
-        "logo": "Swiggy%20One%20Lite/One_lite_vertical_logo.png"
-      },
-      "freedelMessage": "FREE DELIVERY",
-      "badgeType": "BADGE_TYPE_ONE_LITE"
-    },
-    "differentiatedUi": {
-      "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-      "differentiatedUiMediaDetails": {
-        "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-        "lottie": {
-          
-        },
-        "video": {
-          
-        }
-      }
-    },
-    "reviewsSummary": {
-      
-    },
-    "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-    "restaurantOfferPresentationInfo": {
-      
-    }
-  }},
+  
 
   {info: {
     "id": "15905",
@@ -1130,7 +1047,7 @@ const reslist=[
       "Desserts",
       "North Indian"
     ],
-    "avgRating": 4.7,
+    "avgRating": 3.7,
     "veg": true,
     "parentId": "53",
     "avgRatingString": "4.7",

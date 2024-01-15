@@ -27194,7 +27194,7 @@ const Header = ()=>{
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                 children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
-                    src: "https://cdn1.vectorstock.com/i/1000x1000/07/75/food-delivery-logo-design-vector-24450775.jpg",
+                    src: "https://penji.co/wp-content/uploads/2022/08/11.Foodigy-logo.jpg",
                     className: "image-logo"
                 }, void 0, false, {
                     fileName: "src/Header.js",
@@ -27443,27 +27443,57 @@ var _mockdata = require("../constant/mockdata");
 var _mockdataDefault = parcelHelpers.interopDefault(_mockdata);
 var _restrauntCard = require("./RestrauntCard");
 var _restrauntCardDefault = parcelHelpers.interopDefault(_restrauntCard);
+var _s = $RefreshSig$();
 const Body = ()=>{
+    _s();
+    const [restaurantList, setRestaurantList] = (0, _react.useState)((0, _mockdataDefault.default));
+    let Fetchdata = async ()=>{
+        let res = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9715987&lng=77.5945627&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+        let data = await res.json();
+        console.log(data);
+    };
+    (0, _react.useEffect)(Fetchdata(), []);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        className: "body",
-        children: (0, _mockdataDefault.default).map((restaurant)=>{
-            return /*#__PURE__*/ (0, _react.createElement)((0, _restrauntCardDefault.default), {
-                ...restaurant.info,
-                key: restaurant.info.id,
-                __source: {
-                    fileName: "src/Body.js",
-                    lineNumber: 10,
-                    columnNumber: 16
+        children: [
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                className: "top-btn",
+                onClick: ()=>{
+                    let filterdData = (0, _mockdataDefault.default).filter((el)=>el.info.avgRating > 4.5);
+                    setRestaurantList(filterdData);
                 },
-                __self: undefined
-            });
-        })
-    }, void 0, false, {
+                children: "Top Restaurant "
+            }, void 0, false, {
+                fileName: "src/Body.js",
+                lineNumber: 22,
+                columnNumber: 1
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "body",
+                children: restaurantList.map((restaurant)=>{
+                    return /*#__PURE__*/ (0, _react.createElement)((0, _restrauntCardDefault.default), {
+                        ...restaurant.info,
+                        key: restaurant.info.id,
+                        __source: {
+                            fileName: "src/Body.js",
+                            lineNumber: 29,
+                            columnNumber: 16
+                        },
+                        __self: undefined
+                    });
+                })
+            }, void 0, false, {
+                fileName: "src/Body.js",
+                lineNumber: 26,
+                columnNumber: 9
+            }, undefined)
+        ]
+    }, void 0, true, {
         fileName: "src/Body.js",
-        lineNumber: 8,
-        columnNumber: 9
+        lineNumber: 20,
+        columnNumber: 7
     }, undefined);
 };
+_s(Body, "Cy19XWS1hjLwPWeHQ3qtgqu9pGQ=");
 _c = Body;
 exports.default = Body;
 var _c;
@@ -28039,7 +28069,7 @@ const reslist = [
                 "Thalis",
                 "Biryani"
             ],
-            "avgRating": 4.4,
+            "avgRating": 3.4,
             "parentId": "76139",
             "avgRatingString": "4.4",
             "totalRatingsString": "1K+",
@@ -28289,81 +28319,7 @@ const reslist = [
             "cuisines": [
                 "Sweets"
             ],
-            "avgRating": 4.6,
-            "veg": true,
-            "parentId": "4700",
-            "avgRatingString": "4.6",
-            "totalRatingsString": "5K+",
-            "sla": {
-                "deliveryTime": 22,
-                "lastMileTravel": 2,
-                "serviceability": "SERVICEABLE",
-                "slaString": "20-25 mins",
-                "lastMileTravelString": "2.0 km",
-                "iconType": "ICON_TYPE_EMPTY"
-            },
-            "availability": {
-                "nextCloseTime": "2024-01-14 22:00:00",
-                "opened": true
-            },
-            "badges": {
-                "imageBadges": [
-                    {
-                        "imageId": "v1695133679/badges/Pure_Veg111.png",
-                        "description": "pureveg"
-                    }
-                ]
-            },
-            "isOpen": true,
-            "type": "F",
-            "badgesV2": {
-                "entityBadges": {
-                    "imageBased": {
-                        "badgeObject": [
-                            {
-                                "attributes": {
-                                    "description": "pureveg",
-                                    "imageId": "v1695133679/badges/Pure_Veg111.png"
-                                }
-                            }
-                        ]
-                    },
-                    "textBased": {},
-                    "textExtendedBadges": {}
-                }
-            },
-            "loyaltyDiscoverPresentationInfo": {
-                "logoCtx": {
-                    "logo": "Swiggy%20One%20Lite/One_lite_vertical_logo.png"
-                },
-                "freedelMessage": "FREE DELIVERY",
-                "badgeType": "BADGE_TYPE_ONE_LITE"
-            },
-            "differentiatedUi": {
-                "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                "differentiatedUiMediaDetails": {
-                    "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                    "lottie": {},
-                    "video": {}
-                }
-            },
-            "reviewsSummary": {},
-            "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-            "restaurantOfferPresentationInfo": {}
-        }
-    },
-    {
-        info: {
-            "id": "48230",
-            "name": "Kanti Sweets",
-            "cloudinaryImageId": "u0hhfifwmpsnobytv2yf",
-            "locality": "Brigade Road",
-            "areaName": "Brigade Road",
-            "costForTwo": "\u20B9150 for two",
-            "cuisines": [
-                "Sweets"
-            ],
-            "avgRating": 4.6,
+            "avgRating": 2.6,
             "veg": true,
             "parentId": "4700",
             "avgRatingString": "4.6",
@@ -28441,7 +28397,7 @@ const reslist = [
                 "Desserts",
                 "North Indian"
             ],
-            "avgRating": 4.7,
+            "avgRating": 3.7,
             "veg": true,
             "parentId": "53",
             "avgRatingString": "4.7",

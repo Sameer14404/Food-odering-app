@@ -5,7 +5,7 @@ const Header=()=>{
         <div className="header-container">
           
             <div>
-            <img src="https://cdn1.vectorstock.com/i/1000x1000/07/75/food-delivery-logo-design-vector-24450775.jpg" className="image-logo"/>
+            <img src="https://penji.co/wp-content/uploads/2022/08/11.Foodigy-logo.jpg" className="image-logo"/>
             </div>
              
                
