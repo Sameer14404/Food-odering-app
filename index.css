@@ -34,3 +34,65 @@ grid-template-columns: repeat(4,1fr);
     border: 3px solid black;
     cursor: pointer;
 }
+
+.filter{
+    display: flex;
+    gap: 10px;
+}
+/* ShimmerCard.css */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    max-width: 100%;
+  }
+  
+  .card {
+    position: relative;
+    width: 200px;
+    height: 300px;
+    margin: 20px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+  
+  .shimmer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(-45deg, #eee 25%, #f5f5f5 50%, #eee 75%);
+    background-size: 200% 200%;
+    animation: shimmer 1.5s infinite;
+  }
+  
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+  
+  .content {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .content h1 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .content img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-bottom: 1px solid #ddd;
+  }
+  

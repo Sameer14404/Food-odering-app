@@ -27461,7 +27461,7 @@ const Body = ()=>{
     };
     if (restaurantList.length == 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _shimmerDefault.default), {}, void 0, false, {
         fileName: "src/Body.js",
-        lineNumber: 29,
+        lineNumber: 30,
         columnNumber: 3
     }, undefined);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -27472,13 +27472,13 @@ const Body = ()=>{
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                         className: "filter-btn",
                         onClick: ()=>{
-                            let filter = restaurantList.filter((restaurant)=>restaurant.info.avgRating > 4);
-                            setRestaurantList(filter);
+                            let topRatedList = restaurantList.filter((res)=>res.info.avgRating > 4);
+                            setFilterRestaurant(topRatedList);
                         },
                         children: "Top rated restaurant"
                     }, void 0, false, {
                         fileName: "src/Body.js",
-                        lineNumber: 39,
+                        lineNumber: 40,
                         columnNumber: 3
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -27493,7 +27493,7 @@ const Body = ()=>{
                                 }
                             }, void 0, false, {
                                 fileName: "src/Body.js",
-                                lineNumber: 46,
+                                lineNumber: 47,
                                 columnNumber: 5
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -27505,19 +27505,19 @@ const Body = ()=>{
                                 children: "search"
                             }, void 0, false, {
                                 fileName: "src/Body.js",
-                                lineNumber: 48,
+                                lineNumber: 49,
                                 columnNumber: 5
                             }, undefined)
                         ]
                     }, void 0, true, {
                         fileName: "src/Body.js",
-                        lineNumber: 45,
+                        lineNumber: 46,
                         columnNumber: 3
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/Body.js",
-                lineNumber: 38,
+                lineNumber: 39,
                 columnNumber: 1
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -27526,18 +27526,18 @@ const Body = ()=>{
                         ...restaurant
                     }, restaurant.info.id, false, {
                         fileName: "src/Body.js",
-                        lineNumber: 58,
+                        lineNumber: 59,
                         columnNumber: 43
                     }, undefined))
             }, void 0, false, {
                 fileName: "src/Body.js",
-                lineNumber: 56,
+                lineNumber: 57,
                 columnNumber: 9
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/Body.js",
-        lineNumber: 36,
+        lineNumber: 37,
         columnNumber: 7
     }, undefined);
 };

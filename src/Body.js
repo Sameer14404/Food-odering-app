@@ -12,6 +12,7 @@ const Body=()=>{
   let  [restaurantList,setRestaurantList]=useState([]);
  let [searchText,setSearchText]=useState("");
  let [filterRestaurant,setFilterRestaurant]=useState([]);
+
   useEffect(()=>{
     Fetchdata();
      },[])
@@ -37,8 +38,8 @@ if(restaurantList.length==0){
 
 <div className="filter">
   <button className="filter-btn" onClick={()=>{
-    let filter=restaurantList.filter((restaurant)=>restaurant.info.avgRating>4)
-setRestaurantList(filter)
+  let topRatedList=restaurantList.filter((res)=>res.info.avgRating>4)
+   setFilterRestaurant(topRatedList)
   }}>
     Top rated restaurant
   </button>
@@ -48,7 +49,7 @@ setRestaurantList(filter)
     <button className="search-btn" onClick={()=>{
       let search=restaurantList.filter((restaurant)=>restaurant.info.name.toLowerCase().includes(searchText.toLowerCase()))
 setFilterRestaurant(search)
-      
+    
     }}>search</button>
   </div>
 </div>
