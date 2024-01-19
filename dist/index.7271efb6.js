@@ -27435,65 +27435,113 @@ var prevRefreshSig = window.$RefreshSig$;
 $parcel$ReactRefreshHelpers$5d06.prelude(module);
 
 try {
+// import reslist  from "../constant/mockdata";
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
-var _react = require("react");
-var _mockdata = require("../constant/mockdata");
-var _mockdataDefault = parcelHelpers.interopDefault(_mockdata);
 var _restrauntCard = require("./RestrauntCard");
 var _restrauntCardDefault = parcelHelpers.interopDefault(_restrauntCard);
+var _react = require("react");
+var _shimmer = require("./Shimmer");
+var _shimmerDefault = parcelHelpers.interopDefault(_shimmer);
 var _s = $RefreshSig$();
 const Body = ()=>{
     _s();
-    const [restaurantList, setRestaurantList] = (0, _react.useState)((0, _mockdataDefault.default));
+    let [restaurantList, setRestaurantList] = (0, _react.useState)([]);
+    let [searchText, setSearchText] = (0, _react.useState)("");
+    let [filterRestaurant, setFilterRestaurant] = (0, _react.useState)([]);
+    (0, _react.useEffect)(()=>{
+        Fetchdata();
+    }, []);
     let Fetchdata = async ()=>{
-        let res = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9715987&lng=77.5945627&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+        let res = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.0759837&lng=72.8776559&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
         let data = await res.json();
-        console.log(data);
+        setRestaurantList(data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        setFilterRestaurant(data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
     };
-    (0, _react.useEffect)(Fetchdata(), []);
+    if (restaurantList.length == 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _shimmerDefault.default), {}, void 0, false, {
+        fileName: "src/Body.js",
+        lineNumber: 29,
+        columnNumber: 3
+    }, undefined);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: [
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
-                className: "top-btn",
-                onClick: ()=>{
-                    let filterdData = (0, _mockdataDefault.default).filter((el)=>el.info.avgRating > 4.5);
-                    setRestaurantList(filterdData);
-                },
-                children: "Top Restaurant "
-            }, void 0, false, {
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "filter",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                        className: "filter-btn",
+                        onClick: ()=>{
+                            let filter = restaurantList.filter((restaurant)=>restaurant.info.avgRating > 4);
+                            setRestaurantList(filter);
+                        },
+                        children: "Top rated restaurant"
+                    }, void 0, false, {
+                        fileName: "src/Body.js",
+                        lineNumber: 39,
+                        columnNumber: 3
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "search",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                                type: "text",
+                                className: "input-search",
+                                value: searchText,
+                                onChange: (e)=>{
+                                    setSearchText(e.target.value);
+                                }
+                            }, void 0, false, {
+                                fileName: "src/Body.js",
+                                lineNumber: 46,
+                                columnNumber: 5
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                                className: "search-btn",
+                                onClick: ()=>{
+                                    let search = restaurantList.filter((restaurant)=>restaurant.info.name.toLowerCase().includes(searchText.toLowerCase()));
+                                    setFilterRestaurant(search);
+                                },
+                                children: "search"
+                            }, void 0, false, {
+                                fileName: "src/Body.js",
+                                lineNumber: 48,
+                                columnNumber: 5
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Body.js",
+                        lineNumber: 45,
+                        columnNumber: 3
+                    }, undefined)
+                ]
+            }, void 0, true, {
                 fileName: "src/Body.js",
-                lineNumber: 22,
+                lineNumber: 38,
                 columnNumber: 1
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                 className: "body",
-                children: restaurantList.map((restaurant)=>{
-                    return /*#__PURE__*/ (0, _react.createElement)((0, _restrauntCardDefault.default), {
-                        ...restaurant.info,
-                        key: restaurant.info.id,
-                        __source: {
-                            fileName: "src/Body.js",
-                            lineNumber: 29,
-                            columnNumber: 16
-                        },
-                        __self: undefined
-                    });
-                })
+                children: filterRestaurant.map((restaurant)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _restrauntCardDefault.default), {
+                        ...restaurant
+                    }, restaurant.info.id, false, {
+                        fileName: "src/Body.js",
+                        lineNumber: 58,
+                        columnNumber: 43
+                    }, undefined))
             }, void 0, false, {
                 fileName: "src/Body.js",
-                lineNumber: 26,
+                lineNumber: 56,
                 columnNumber: 9
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/Body.js",
-        lineNumber: 20,
+        lineNumber: 36,
         columnNumber: 7
     }, undefined);
 };
-_s(Body, "Cy19XWS1hjLwPWeHQ3qtgqu9pGQ=");
+_s(Body, "eBOaBUmoNctOsWeNu53YbXVJcfw=");
 _c = Body;
 exports.default = Body;
 var _c;
@@ -27504,989 +27552,7 @@ $RefreshReg$(_c, "Body");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","../constant/mockdata":"6YCpt","./RestrauntCard":"dxEvu","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"6YCpt":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-const reslist = [
-    {
-        info: {
-            "id": "3369",
-            "name": "Truffles",
-            "cloudinaryImageId": "cd832b6167eb9f88aeb1ccdebf38d942",
-            "locality": "St. Marks Road",
-            "areaName": "St. Marks Road",
-            "costForTwo": "\u20B9450 for two",
-            "cuisines": [
-                "American",
-                "Desserts",
-                "Continental",
-                "Italian"
-            ],
-            "avgRating": 4.6,
-            "parentId": "218065",
-            "avgRatingString": "4.6",
-            "totalRatingsString": "10K+",
-            "sla": {
-                "deliveryTime": 27,
-                "lastMileTravel": 0.9,
-                "serviceability": "SERVICEABLE",
-                "slaString": "25-30 mins",
-                "lastMileTravelString": "0.9 km",
-                "iconType": "ICON_TYPE_EMPTY"
-            },
-            "availability": {
-                "nextCloseTime": "2024-01-14 23:30:00",
-                "opened": true
-            },
-            "badges": {},
-            "isOpen": true,
-            "type": "F",
-            "badgesV2": {
-                "entityBadges": {
-                    "imageBased": {},
-                    "textBased": {},
-                    "textExtendedBadges": {}
-                }
-            },
-            "aggregatedDiscountInfoV3": {
-                "header": "\u20B950 OFF",
-                "subHeader": "ABOVE \u20B9199",
-                "discountTag": "FLAT DEAL"
-            },
-            "loyaltyDiscoverPresentationInfo": {
-                "logoCtx": {
-                    "logo": "Swiggy%20One%20Lite/One_lite_vertical_logo.png"
-                },
-                "freedelMessage": "FREE DELIVERY",
-                "badgeType": "BADGE_TYPE_ONE_LITE"
-            },
-            "differentiatedUi": {
-                "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                "differentiatedUiMediaDetails": {
-                    "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                    "lottie": {},
-                    "video": {}
-                }
-            },
-            "reviewsSummary": {},
-            "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-            "restaurantOfferPresentationInfo": {}
-        }
-    },
-    {
-        info: {
-            "id": "23847",
-            "name": "Domino's Pizza",
-            "cloudinaryImageId": "fjqcvqfgqlw6h0atques",
-            "locality": "Rest House Road",
-            "areaName": "Brigade Road",
-            "costForTwo": "\u20B9400 for two",
-            "cuisines": [
-                "Pizzas",
-                "Italian",
-                "Pastas",
-                "Desserts"
-            ],
-            "avgRating": 4.3,
-            "parentId": "2456",
-            "avgRatingString": "4.3",
-            "totalRatingsString": "5K+",
-            "sla": {
-                "deliveryTime": 25,
-                "serviceability": "SERVICEABLE",
-                "slaString": "25 mins",
-                "iconType": "ICON_TYPE_EMPTY"
-            },
-            "availability": {
-                "nextCloseTime": "2024-01-14 22:59:00",
-                "opened": true
-            },
-            "badges": {},
-            "isOpen": true,
-            "type": "F",
-            "badgesV2": {
-                "entityBadges": {
-                    "imageBased": {},
-                    "textBased": {},
-                    "textExtendedBadges": {}
-                }
-            },
-            "aggregatedDiscountInfoV3": {
-                "header": "40% OFF",
-                "subHeader": "UPTO \u20B980"
-            },
-            "differentiatedUi": {
-                "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                "differentiatedUiMediaDetails": {
-                    "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                    "lottie": {},
-                    "video": {}
-                }
-            },
-            "reviewsSummary": {},
-            "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-            "restaurantOfferPresentationInfo": {}
-        }
-    },
-    {
-        info: {
-            "id": "43836",
-            "name": "McDonald's",
-            "cloudinaryImageId": "405645b3118d83e89db4c65361e43733",
-            "locality": "MG Road",
-            "areaName": "Ashok Nagar",
-            "costForTwo": "\u20B9400 for two",
-            "cuisines": [
-                "Burgers",
-                "Beverages",
-                "Cafe",
-                "Desserts"
-            ],
-            "avgRating": 4.2,
-            "parentId": "630",
-            "avgRatingString": "4.2",
-            "totalRatingsString": "10K+",
-            "sla": {
-                "deliveryTime": 18,
-                "lastMileTravel": 0.7,
-                "serviceability": "SERVICEABLE",
-                "slaString": "15-20 mins",
-                "lastMileTravelString": "0.7 km",
-                "iconType": "ICON_TYPE_EMPTY"
-            },
-            "availability": {
-                "nextCloseTime": "2024-01-15 02:45:00",
-                "opened": true
-            },
-            "badges": {
-                "textExtendedBadges": [
-                    {
-                        "iconId": "guiltfree/GF_Logo_android_3x",
-                        "shortDescription": "options available",
-                        "fontColor": "#7E808C"
-                    }
-                ]
-            },
-            "isOpen": true,
-            "type": "F",
-            "badgesV2": {
-                "entityBadges": {
-                    "imageBased": {},
-                    "textBased": {},
-                    "textExtendedBadges": {
-                        "badgeObject": [
-                            {
-                                "attributes": {
-                                    "description": "",
-                                    "fontColor": "#7E808C",
-                                    "iconId": "guiltfree/GF_Logo_android_3x",
-                                    "shortDescription": "options available"
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
-            "aggregatedDiscountInfoV3": {
-                "header": "20% OFF",
-                "subHeader": "UPTO \u20B950"
-            },
-            "loyaltyDiscoverPresentationInfo": {
-                "logoCtx": {
-                    "logo": "Swiggy%20One%20Lite/One_lite_vertical_logo.png"
-                },
-                "freedelMessage": "FREE DELIVERY",
-                "badgeType": "BADGE_TYPE_ONE_LITE"
-            },
-            "differentiatedUi": {
-                "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                "differentiatedUiMediaDetails": {
-                    "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                    "lottie": {},
-                    "video": {}
-                }
-            },
-            "reviewsSummary": {},
-            "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-            "restaurantOfferPresentationInfo": {}
-        }
-    },
-    {
-        info: {
-            "id": "347868",
-            "name": "KFC",
-            "cloudinaryImageId": "f01666ac73626461d7455d9c24005cd4",
-            "locality": "Cunnigham road",
-            "areaName": "Vasanth Nagar",
-            "costForTwo": "\u20B9400 for two",
-            "cuisines": [
-                "Burgers",
-                "Biryani",
-                "American",
-                "Snacks",
-                "Fast Food"
-            ],
-            "avgRating": 4,
-            "parentId": "547",
-            "avgRatingString": "4.0",
-            "totalRatingsString": "1K+",
-            "sla": {
-                "deliveryTime": 26,
-                "lastMileTravel": 3,
-                "serviceability": "SERVICEABLE",
-                "slaString": "25-30 mins",
-                "lastMileTravelString": "3.0 km",
-                "iconType": "ICON_TYPE_EMPTY"
-            },
-            "availability": {
-                "nextCloseTime": "2024-01-15 03:00:00",
-                "opened": true
-            },
-            "badges": {},
-            "isOpen": true,
-            "type": "F",
-            "badgesV2": {
-                "entityBadges": {
-                    "imageBased": {},
-                    "textBased": {},
-                    "textExtendedBadges": {}
-                }
-            },
-            "aggregatedDiscountInfoV3": {
-                "header": "40% OFF",
-                "subHeader": "UPTO \u20B980"
-            },
-            "loyaltyDiscoverPresentationInfo": {
-                "logoCtx": {
-                    "logo": "Swiggy%20One%20Lite/One_lite_vertical_logo.png"
-                },
-                "freedelMessage": "FREE DELIVERY",
-                "badgeType": "BADGE_TYPE_ONE_LITE"
-            },
-            "differentiatedUi": {
-                "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                "differentiatedUiMediaDetails": {
-                    "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                    "lottie": {},
-                    "video": {}
-                }
-            },
-            "reviewsSummary": {},
-            "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-            "restaurantOfferPresentationInfo": {}
-        }
-    },
-    {
-        info: {
-            "id": "5938",
-            "name": "Burger King",
-            "cloudinaryImageId": "e33e1d3ba7d6b2bb0d45e1001b731fcf",
-            "locality": "Tasker Town",
-            "areaName": "Shivaji Nagar",
-            "costForTwo": "\u20B9350 for two",
-            "cuisines": [
-                "Burgers",
-                "American"
-            ],
-            "avgRating": 4.2,
-            "parentId": "166",
-            "avgRatingString": "4.2",
-            "totalRatingsString": "10K+",
-            "sla": {
-                "deliveryTime": 32,
-                "lastMileTravel": 2.7,
-                "serviceability": "SERVICEABLE",
-                "slaString": "30-35 mins",
-                "lastMileTravelString": "2.7 km",
-                "iconType": "ICON_TYPE_EMPTY"
-            },
-            "availability": {
-                "nextCloseTime": "2024-01-15 02:00:00",
-                "opened": true
-            },
-            "badges": {},
-            "isOpen": true,
-            "type": "F",
-            "badgesV2": {
-                "entityBadges": {
-                    "imageBased": {},
-                    "textBased": {},
-                    "textExtendedBadges": {}
-                }
-            },
-            "aggregatedDiscountInfoV3": {
-                "header": "60% OFF",
-                "subHeader": "UPTO \u20B9120"
-            },
-            "loyaltyDiscoverPresentationInfo": {
-                "logoCtx": {
-                    "logo": "Swiggy%20One%20Lite/One_lite_vertical_logo.png"
-                },
-                "freedelMessage": "FREE DELIVERY",
-                "badgeType": "BADGE_TYPE_ONE_LITE"
-            },
-            "differentiatedUi": {
-                "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                "differentiatedUiMediaDetails": {
-                    "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                    "lottie": {},
-                    "video": {}
-                }
-            },
-            "reviewsSummary": {},
-            "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-            "restaurantOfferPresentationInfo": {}
-        }
-    },
-    {
-        info: {
-            "id": "396748",
-            "name": "The Good Bowl",
-            "cloudinaryImageId": "6e04be27387483a7c00444f8e8241108",
-            "locality": "Residency Road",
-            "areaName": "Shantinagar",
-            "costForTwo": "\u20B9400 for two",
-            "cuisines": [
-                "Biryani",
-                "Pastas",
-                "Punjabi",
-                "Desserts",
-                "Beverages"
-            ],
-            "avgRating": 4.4,
-            "parentId": "7918",
-            "avgRatingString": "4.4",
-            "totalRatingsString": "100+",
-            "sla": {
-                "deliveryTime": 31,
-                "lastMileTravel": 3,
-                "serviceability": "SERVICEABLE",
-                "slaString": "30-35 mins",
-                "lastMileTravelString": "3.0 km",
-                "iconType": "ICON_TYPE_EMPTY"
-            },
-            "availability": {
-                "nextCloseTime": "2024-01-14 23:59:00",
-                "opened": true
-            },
-            "badges": {},
-            "isOpen": true,
-            "type": "F",
-            "badgesV2": {
-                "entityBadges": {
-                    "imageBased": {},
-                    "textBased": {},
-                    "textExtendedBadges": {}
-                }
-            },
-            "aggregatedDiscountInfoV3": {
-                "header": "60% OFF",
-                "subHeader": "UPTO \u20B9110"
-            },
-            "loyaltyDiscoverPresentationInfo": {
-                "logoCtx": {
-                    "logo": "Swiggy%20One%20Lite/One_lite_vertical_logo.png"
-                },
-                "freedelMessage": "FREE DELIVERY",
-                "badgeType": "BADGE_TYPE_ONE_LITE"
-            },
-            "differentiatedUi": {
-                "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                "differentiatedUiMediaDetails": {
-                    "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                    "lottie": {},
-                    "video": {}
-                }
-            },
-            "reviewsSummary": {},
-            "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-            "restaurantOfferPresentationInfo": {}
-        }
-    },
-    {
-        info: {
-            "id": "124178",
-            "name": "Starbucks Coffee",
-            "cloudinaryImageId": "258fe8a3577877fbfe064095ed1d9dc3",
-            "locality": "Ashok Nagar",
-            "areaName": "Lavelle Road",
-            "costForTwo": "\u20B9400 for two",
-            "cuisines": [
-                "Beverages",
-                "Cafe",
-                "Snacks",
-                "Desserts",
-                "Bakery",
-                "Ice Cream"
-            ],
-            "avgRating": 4.3,
-            "parentId": "195515",
-            "avgRatingString": "4.3",
-            "totalRatingsString": "1K+",
-            "sla": {
-                "deliveryTime": 19,
-                "lastMileTravel": 0.5,
-                "serviceability": "SERVICEABLE",
-                "slaString": "15-20 mins",
-                "lastMileTravelString": "0.5 km",
-                "iconType": "ICON_TYPE_EMPTY"
-            },
-            "availability": {
-                "nextCloseTime": "2024-01-14 23:59:00",
-                "opened": true
-            },
-            "badges": {
-                "textExtendedBadges": [
-                    {
-                        "iconId": "guiltfree/GF_Logo_android_3x",
-                        "shortDescription": "options available",
-                        "fontColor": "#7E808C"
-                    }
-                ]
-            },
-            "isOpen": true,
-            "type": "F",
-            "badgesV2": {
-                "entityBadges": {
-                    "imageBased": {},
-                    "textBased": {},
-                    "textExtendedBadges": {
-                        "badgeObject": [
-                            {
-                                "attributes": {
-                                    "description": "",
-                                    "fontColor": "#7E808C",
-                                    "iconId": "guiltfree/GF_Logo_android_3x",
-                                    "shortDescription": "options available"
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
-            "aggregatedDiscountInfoV3": {
-                "header": "20% OFF",
-                "subHeader": "UPTO \u20B950"
-            },
-            "loyaltyDiscoverPresentationInfo": {
-                "logoCtx": {
-                    "logo": "Swiggy%20One%20Lite/One_lite_vertical_logo.png"
-                },
-                "freedelMessage": "FREE DELIVERY",
-                "badgeType": "BADGE_TYPE_ONE_LITE"
-            },
-            "differentiatedUi": {
-                "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                "differentiatedUiMediaDetails": {
-                    "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                    "lottie": {},
-                    "video": {}
-                }
-            },
-            "reviewsSummary": {},
-            "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-            "restaurantOfferPresentationInfo": {}
-        }
-    },
-    {
-        info: {
-            "id": "30531",
-            "name": "Hotel Empire",
-            "cloudinaryImageId": "qltgnkyywuo5gmnpqzbm",
-            "locality": "Brigade Road",
-            "areaName": "Church Street",
-            "costForTwo": "\u20B9450 for two",
-            "cuisines": [
-                "North Indian",
-                "Kebabs",
-                "Biryani"
-            ],
-            "avgRating": 4.4,
-            "parentId": "475",
-            "avgRatingString": "4.4",
-            "totalRatingsString": "10K+",
-            "sla": {
-                "deliveryTime": 30,
-                "lastMileTravel": 2.3,
-                "serviceability": "SERVICEABLE",
-                "slaString": "25-30 mins",
-                "lastMileTravelString": "2.3 km",
-                "iconType": "ICON_TYPE_EMPTY"
-            },
-            "availability": {
-                "nextCloseTime": "2024-01-15 03:00:00",
-                "opened": true
-            },
-            "badges": {},
-            "isOpen": true,
-            "type": "F",
-            "badgesV2": {
-                "entityBadges": {
-                    "imageBased": {},
-                    "textBased": {},
-                    "textExtendedBadges": {}
-                }
-            },
-            "aggregatedDiscountInfoV3": {
-                "header": "\u20B950 OFF",
-                "subHeader": "ABOVE \u20B9199",
-                "discountTag": "FLAT DEAL"
-            },
-            "loyaltyDiscoverPresentationInfo": {
-                "logoCtx": {
-                    "logo": "Swiggy%20One%20Lite/One_lite_vertical_logo.png"
-                },
-                "freedelMessage": "FREE DELIVERY",
-                "badgeType": "BADGE_TYPE_ONE_LITE"
-            },
-            "differentiatedUi": {
-                "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                "differentiatedUiMediaDetails": {
-                    "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                    "lottie": {},
-                    "video": {}
-                }
-            },
-            "reviewsSummary": {},
-            "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-            "restaurantOfferPresentationInfo": {}
-        }
-    },
-    {
-        info: {
-            "id": "393107",
-            "name": "EatFit",
-            "cloudinaryImageId": "6126c9b45de2cb222405c1af8a321e74",
-            "locality": "Ali Asker Road",
-            "areaName": "Cunningham Road",
-            "costForTwo": "\u20B9270 for two",
-            "cuisines": [
-                "Chinese",
-                "Healthy Food",
-                "Tandoor",
-                "Pizzas",
-                "North Indian",
-                "Thalis",
-                "Biryani"
-            ],
-            "avgRating": 3.4,
-            "parentId": "76139",
-            "avgRatingString": "4.4",
-            "totalRatingsString": "1K+",
-            "sla": {
-                "deliveryTime": 26,
-                "lastMileTravel": 3,
-                "serviceability": "SERVICEABLE",
-                "slaString": "25-30 mins",
-                "lastMileTravelString": "3.0 km",
-                "iconType": "ICON_TYPE_EMPTY"
-            },
-            "availability": {
-                "nextCloseTime": "2024-01-14 23:59:00",
-                "opened": true
-            },
-            "badges": {
-                "textExtendedBadges": [
-                    {
-                        "iconId": "guiltfree/GF_Logo_android_3x",
-                        "shortDescription": "brand",
-                        "fontColor": "#7E808C"
-                    }
-                ]
-            },
-            "isOpen": true,
-            "type": "F",
-            "badgesV2": {
-                "entityBadges": {
-                    "imageBased": {},
-                    "textBased": {},
-                    "textExtendedBadges": {
-                        "badgeObject": [
-                            {
-                                "attributes": {
-                                    "description": "",
-                                    "fontColor": "#7E808C",
-                                    "iconId": "guiltfree/GF_Logo_android_3x",
-                                    "shortDescription": "brand"
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
-            "aggregatedDiscountInfoV3": {
-                "header": "ITEMS",
-                "subHeader": "AT \u20B9159"
-            },
-            "loyaltyDiscoverPresentationInfo": {
-                "logoCtx": {
-                    "logo": "Swiggy%20One%20Lite/One_lite_vertical_logo.png"
-                },
-                "freedelMessage": "FREE DELIVERY",
-                "badgeType": "BADGE_TYPE_ONE_LITE"
-            },
-            "differentiatedUi": {
-                "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                "differentiatedUiMediaDetails": {
-                    "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                    "lottie": {},
-                    "video": {}
-                }
-            },
-            "reviewsSummary": {},
-            "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-            "restaurantOfferPresentationInfo": {}
-        }
-    },
-    {
-        info: {
-            "id": "102334",
-            "name": "Dindigul Thalappakatti",
-            "cloudinaryImageId": "ogidjgqgh5w4otvuiipj",
-            "locality": "Mg Road",
-            "areaName": "MG Road",
-            "costForTwo": "\u20B9650 for two",
-            "cuisines": [
-                "Biryani",
-                "Barbecue",
-                "South Indian",
-                "Chinese",
-                "North Indian"
-            ],
-            "avgRating": 4.3,
-            "parentId": "332",
-            "avgRatingString": "4.3",
-            "totalRatingsString": "5K+",
-            "sla": {
-                "deliveryTime": 26,
-                "lastMileTravel": 3.5,
-                "serviceability": "SERVICEABLE",
-                "slaString": "25-30 mins",
-                "lastMileTravelString": "3.5 km",
-                "iconType": "ICON_TYPE_EMPTY"
-            },
-            "availability": {
-                "nextCloseTime": "2024-01-14 23:59:00",
-                "opened": true
-            },
-            "badges": {},
-            "isOpen": true,
-            "type": "F",
-            "badgesV2": {
-                "entityBadges": {
-                    "imageBased": {},
-                    "textBased": {},
-                    "textExtendedBadges": {}
-                }
-            },
-            "aggregatedDiscountInfoV3": {
-                "header": "40% OFF",
-                "subHeader": "UPTO \u20B980"
-            },
-            "loyaltyDiscoverPresentationInfo": {
-                "logoCtx": {
-                    "logo": "Swiggy%20One%20Lite/One_lite_vertical_logo.png"
-                },
-                "freedelMessage": "FREE DELIVERY",
-                "badgeType": "BADGE_TYPE_ONE_LITE"
-            },
-            "differentiatedUi": {
-                "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                "differentiatedUiMediaDetails": {
-                    "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                    "lottie": {},
-                    "video": {}
-                }
-            },
-            "reviewsSummary": {},
-            "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-            "restaurantOfferPresentationInfo": {}
-        }
-    },
-    {
-        info: {
-            "id": "503961",
-            "name": "Istah - The Mediterranean Way",
-            "cloudinaryImageId": "9a01f2935fcb5ae05426db8264062102",
-            "locality": "Akkithimanahalli",
-            "areaName": "Santhi Nagar",
-            "costForTwo": "\u20B9250 for two",
-            "cuisines": [
-                "Mediterranean",
-                "Snacks",
-                "Biryani",
-                "Grill",
-                "Kebabs",
-                "Arabian",
-                "Lebanese",
-                "Beverages",
-                "Desserts",
-                "Italian",
-                "Turkish"
-            ],
-            "avgRating": 4.5,
-            "parentId": "3518",
-            "avgRatingString": "4.5",
-            "totalRatingsString": "1K+",
-            "sla": {
-                "deliveryTime": 30,
-                "lastMileTravel": 3,
-                "serviceability": "SERVICEABLE",
-                "slaString": "25-30 mins",
-                "lastMileTravelString": "3.0 km",
-                "iconType": "ICON_TYPE_EMPTY"
-            },
-            "availability": {
-                "nextCloseTime": "2024-01-15 00:00:00",
-                "opened": true
-            },
-            "badges": {
-                "imageBadges": [
-                    {
-                        "imageId": "v1690360529/Ratnesh_Badges/Only_on_swiggy_badge_4x.png",
-                        "description": "OnlyOnSwiggy"
-                    }
-                ],
-                "textExtendedBadges": [
-                    {
-                        "iconId": "guiltfree/GF_Logo_android_3x",
-                        "shortDescription": "options available",
-                        "fontColor": "#7E808C"
-                    }
-                ]
-            },
-            "isOpen": true,
-            "type": "F",
-            "badgesV2": {
-                "entityBadges": {
-                    "imageBased": {
-                        "badgeObject": [
-                            {
-                                "attributes": {
-                                    "description": "OnlyOnSwiggy",
-                                    "imageId": "v1690360529/Ratnesh_Badges/Only_on_swiggy_badge_4x.png"
-                                }
-                            }
-                        ]
-                    },
-                    "textBased": {},
-                    "textExtendedBadges": {
-                        "badgeObject": [
-                            {
-                                "attributes": {
-                                    "description": "",
-                                    "fontColor": "#7E808C",
-                                    "iconId": "guiltfree/GF_Logo_android_3x",
-                                    "shortDescription": "options available"
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
-            "aggregatedDiscountInfoV3": {
-                "header": "60% OFF",
-                "subHeader": "UPTO \u20B9110"
-            },
-            "loyaltyDiscoverPresentationInfo": {
-                "logoCtx": {
-                    "logo": "Swiggy%20One%20Lite/One_lite_vertical_logo.png"
-                },
-                "freedelMessage": "FREE DELIVERY",
-                "badgeType": "BADGE_TYPE_ONE_LITE"
-            },
-            "differentiatedUi": {
-                "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                "differentiatedUiMediaDetails": {
-                    "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                    "lottie": {},
-                    "video": {}
-                }
-            },
-            "reviewsSummary": {},
-            "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-            "restaurantOfferPresentationInfo": {}
-        }
-    },
-    {
-        info: {
-            "id": "48230",
-            "name": "Kanti Sweets",
-            "cloudinaryImageId": "u0hhfifwmpsnobytv2yf",
-            "locality": "Brigade Road",
-            "areaName": "Brigade Road",
-            "costForTwo": "\u20B9150 for two",
-            "cuisines": [
-                "Sweets"
-            ],
-            "avgRating": 2.6,
-            "veg": true,
-            "parentId": "4700",
-            "avgRatingString": "4.6",
-            "totalRatingsString": "5K+",
-            "sla": {
-                "deliveryTime": 22,
-                "lastMileTravel": 2,
-                "serviceability": "SERVICEABLE",
-                "slaString": "20-25 mins",
-                "lastMileTravelString": "2.0 km",
-                "iconType": "ICON_TYPE_EMPTY"
-            },
-            "availability": {
-                "nextCloseTime": "2024-01-14 22:00:00",
-                "opened": true
-            },
-            "badges": {
-                "imageBadges": [
-                    {
-                        "imageId": "v1695133679/badges/Pure_Veg111.png",
-                        "description": "pureveg"
-                    }
-                ]
-            },
-            "isOpen": true,
-            "type": "F",
-            "badgesV2": {
-                "entityBadges": {
-                    "imageBased": {
-                        "badgeObject": [
-                            {
-                                "attributes": {
-                                    "description": "pureveg",
-                                    "imageId": "v1695133679/badges/Pure_Veg111.png"
-                                }
-                            }
-                        ]
-                    },
-                    "textBased": {},
-                    "textExtendedBadges": {}
-                }
-            },
-            "loyaltyDiscoverPresentationInfo": {
-                "logoCtx": {
-                    "logo": "Swiggy%20One%20Lite/One_lite_vertical_logo.png"
-                },
-                "freedelMessage": "FREE DELIVERY",
-                "badgeType": "BADGE_TYPE_ONE_LITE"
-            },
-            "differentiatedUi": {
-                "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                "differentiatedUiMediaDetails": {
-                    "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                    "lottie": {},
-                    "video": {}
-                }
-            },
-            "reviewsSummary": {},
-            "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-            "restaurantOfferPresentationInfo": {}
-        }
-    },
-    {
-        info: {
-            "id": "15905",
-            "name": "Anand Sweets & Savouries",
-            "cloudinaryImageId": "me4mzdjxosmk0lg4ndog",
-            "locality": "Commercial Street",
-            "areaName": "Shivajinagar",
-            "costForTwo": "\u20B9200 for two",
-            "cuisines": [
-                "Sweets",
-                "Chaat",
-                "Snacks",
-                "Desserts",
-                "North Indian"
-            ],
-            "avgRating": 3.7,
-            "veg": true,
-            "parentId": "53",
-            "avgRatingString": "4.7",
-            "totalRatingsString": "10K+",
-            "sla": {
-                "deliveryTime": 29,
-                "lastMileTravel": 2.7,
-                "serviceability": "SERVICEABLE",
-                "slaString": "25-30 mins",
-                "lastMileTravelString": "2.7 km",
-                "iconType": "ICON_TYPE_EMPTY"
-            },
-            "availability": {
-                "nextCloseTime": "2024-01-14 22:00:00",
-                "opened": true
-            },
-            "badges": {
-                "imageBadges": [
-                    {
-                        "imageId": "v1695133679/badges/Pure_Veg111.png",
-                        "description": "pureveg"
-                    }
-                ],
-                "textExtendedBadges": [
-                    {
-                        "iconId": "guiltfree/GF_Logo_android_3x",
-                        "shortDescription": "options available",
-                        "fontColor": "#7E808C"
-                    }
-                ]
-            },
-            "isOpen": true,
-            "type": "F",
-            "badgesV2": {
-                "entityBadges": {
-                    "imageBased": {
-                        "badgeObject": [
-                            {
-                                "attributes": {
-                                    "description": "pureveg",
-                                    "imageId": "v1695133679/badges/Pure_Veg111.png"
-                                }
-                            }
-                        ]
-                    },
-                    "textBased": {},
-                    "textExtendedBadges": {
-                        "badgeObject": [
-                            {
-                                "attributes": {
-                                    "description": "",
-                                    "fontColor": "#7E808C",
-                                    "iconId": "guiltfree/GF_Logo_android_3x",
-                                    "shortDescription": "options available"
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
-            "aggregatedDiscountInfoV3": {
-                "header": "\u20B950 OFF",
-                "subHeader": "ABOVE \u20B9199",
-                "discountTag": "FLAT DEAL"
-            },
-            "loyaltyDiscoverPresentationInfo": {
-                "logoCtx": {
-                    "logo": "Swiggy%20One%20Lite/One_lite_vertical_logo.png"
-                },
-                "freedelMessage": "FREE DELIVERY",
-                "badgeType": "BADGE_TYPE_ONE_LITE"
-            },
-            "differentiatedUi": {
-                "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                "differentiatedUiMediaDetails": {
-                    "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                    "lottie": {},
-                    "video": {}
-                }
-            },
-            "reviewsSummary": {},
-            "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-            "restaurantOfferPresentationInfo": {}
-        }
-    }
-];
-exports.default = reslist;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dxEvu":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","./RestrauntCard":"dxEvu","react":"21dqq","./Shimmer":"iSNg0","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"dxEvu":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$862f = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -28497,7 +27563,8 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 const RestrauntCard = (resdata)=>{
-    const { name, cuisines, avgRating, costForTwo, sla, cloudinaryImageId } = resdata;
+    const { info } = resdata;
+    const { name, cuisines, avgRating, costForTwo, sla, cloudinaryImageId } = info;
     const { deliveryTime } = sla;
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         className: "res-container",
@@ -28558,6 +27625,695 @@ var _c;
 $RefreshReg$(_c, "RestrauntCard");
 
   $parcel$ReactRefreshHelpers$862f.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"iSNg0":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$64e1 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$64e1.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+const Shimmer = ()=>{
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        className: "container",
+        children: [
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "card",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "shimmer"
+                    }, void 0, false, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 6,
+                        columnNumber: 11
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "content",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                                src: "your_image_url.jpg",
+                                alt: "Food Image"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 8,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                                children: "Delicious Food"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 9,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                children: "Description of the food item."
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 10,
+                                columnNumber: 13
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 7,
+                        columnNumber: 11
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/Shimmer.js",
+                lineNumber: 5,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "card",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "shimmer"
+                    }, void 0, false, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 14,
+                        columnNumber: 11
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "content",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                                src: "your_image_url.jpg",
+                                alt: "Food Image"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 16,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                                children: "Delicious Food"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 17,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                children: "Description of the food item."
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 18,
+                                columnNumber: 13
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 15,
+                        columnNumber: 11
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/Shimmer.js",
+                lineNumber: 13,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "card",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "shimmer"
+                    }, void 0, false, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 22,
+                        columnNumber: 11
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "content",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                                src: "your_image_url.jpg",
+                                alt: "Food Image"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 24,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                                children: "Delicious Food"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 25,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                children: "Description of the food item."
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 26,
+                                columnNumber: 13
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 23,
+                        columnNumber: 11
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/Shimmer.js",
+                lineNumber: 21,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "card",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "shimmer"
+                    }, void 0, false, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 30,
+                        columnNumber: 11
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "content",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                                src: "your_image_url.jpg",
+                                alt: "Food Image"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 32,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                                children: "Delicious Food"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 33,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                children: "Description of the food item."
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 34,
+                                columnNumber: 13
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 31,
+                        columnNumber: 11
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/Shimmer.js",
+                lineNumber: 29,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "card",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "shimmer"
+                    }, void 0, false, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 38,
+                        columnNumber: 11
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "content",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                                src: "your_image_url.jpg",
+                                alt: "Food Image"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 40,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                                children: "Delicious Food"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 41,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                children: "Description of the food item."
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 42,
+                                columnNumber: 13
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 39,
+                        columnNumber: 11
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/Shimmer.js",
+                lineNumber: 37,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "card",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "shimmer"
+                    }, void 0, false, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 46,
+                        columnNumber: 11
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "content",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                                src: "your_image_url.jpg",
+                                alt: "Food Image"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 48,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                                children: "Delicious Food"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 49,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                children: "Description of the food item."
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 50,
+                                columnNumber: 13
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 47,
+                        columnNumber: 11
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/Shimmer.js",
+                lineNumber: 45,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "card",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "shimmer"
+                    }, void 0, false, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 54,
+                        columnNumber: 11
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "content",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                                src: "your_image_url.jpg",
+                                alt: "Food Image"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 56,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                                children: "Delicious Food"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 57,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                children: "Description of the food item."
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 58,
+                                columnNumber: 13
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 55,
+                        columnNumber: 11
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/Shimmer.js",
+                lineNumber: 53,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "card",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "shimmer"
+                    }, void 0, false, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 62,
+                        columnNumber: 11
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "content",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                                src: "your_image_url.jpg",
+                                alt: "Food Image"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 64,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                                children: "Delicious Food"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 65,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                children: "Description of the food item."
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 66,
+                                columnNumber: 13
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 63,
+                        columnNumber: 11
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/Shimmer.js",
+                lineNumber: 61,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "card",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "shimmer"
+                    }, void 0, false, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 70,
+                        columnNumber: 11
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "content",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                                src: "your_image_url.jpg",
+                                alt: "Food Image"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 72,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                                children: "Delicious Food"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 73,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                children: "Description of the food item."
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 74,
+                                columnNumber: 13
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 71,
+                        columnNumber: 11
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/Shimmer.js",
+                lineNumber: 69,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "card",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "shimmer"
+                    }, void 0, false, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 78,
+                        columnNumber: 11
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "content",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                                src: "your_image_url.jpg",
+                                alt: "Food Image"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 80,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                                children: "Delicious Food"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 81,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                children: "Description of the food item."
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 82,
+                                columnNumber: 13
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 79,
+                        columnNumber: 11
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/Shimmer.js",
+                lineNumber: 77,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "card",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "shimmer"
+                    }, void 0, false, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 86,
+                        columnNumber: 11
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "content",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                                src: "your_image_url.jpg",
+                                alt: "Food Image"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 88,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                                children: "Delicious Food"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 89,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                children: "Description of the food item."
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 90,
+                                columnNumber: 13
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 87,
+                        columnNumber: 11
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/Shimmer.js",
+                lineNumber: 85,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "card",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "shimmer"
+                    }, void 0, false, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 94,
+                        columnNumber: 11
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "content",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                                src: "your_image_url.jpg",
+                                alt: "Food Image"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 96,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                                children: "Delicious Food"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 97,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                children: "Description of the food item."
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 98,
+                                columnNumber: 13
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 95,
+                        columnNumber: 11
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/Shimmer.js",
+                lineNumber: 93,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "card",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "shimmer"
+                    }, void 0, false, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 102,
+                        columnNumber: 11
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "content",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                                src: "your_image_url.jpg",
+                                alt: "Food Image"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 104,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                                children: "Delicious Food"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 105,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                children: "Description of the food item."
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 106,
+                                columnNumber: 13
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 103,
+                        columnNumber: 11
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/Shimmer.js",
+                lineNumber: 101,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "card",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "shimmer"
+                    }, void 0, false, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 110,
+                        columnNumber: 11
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "content",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                                src: "your_image_url.jpg",
+                                alt: "Food Image"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 112,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                                children: "Delicious Food"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 113,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                children: "Description of the food item."
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 114,
+                                columnNumber: 13
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 111,
+                        columnNumber: 11
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/Shimmer.js",
+                lineNumber: 109,
+                columnNumber: 9
+            }, undefined)
+        ]
+    }, void 0, true, {
+        fileName: "src/Shimmer.js",
+        lineNumber: 3,
+        columnNumber: 9
+    }, undefined);
+};
+_c = Shimmer;
+exports.default = Shimmer;
+var _c;
+$RefreshReg$(_c, "Shimmer");
+
+  $parcel$ReactRefreshHelpers$64e1.postlude(module);
 } finally {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;

@@ -2,8 +2,8 @@
 
 
 const RestrauntCard = (resdata ) => {  
-
-    const { name, cuisines, avgRating, costForTwo, sla,cloudinaryImageId } = resdata;
+const{info}=resdata
+    const { name, cuisines, avgRating, costForTwo, sla,cloudinaryImageId } = info;
     const { deliveryTime } = sla;
   
     return (
