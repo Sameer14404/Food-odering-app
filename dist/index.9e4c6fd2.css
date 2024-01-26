@@ -97,4 +97,14 @@
   height: 150px;
 }
 
+.mind_container {
+  display: flex;
+}
+
+.mind_card img {
+  border-radius: 20px;
+  width: 200px;
+  height: 200px;
+}
+
 /*# sourceMappingURL=index.9e4c6fd2.css.map */

@@ -3031,7 +3031,7 @@ $RefreshReg$(_c, "Applayout");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-dom/client":"lOjBx","./Header":"lhQzv","./Body":"5pK3b","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react-router-dom":"9xmpe","./Aboutus":"d9JSF","./Contact":"c6A09","./Error":"g5bIt"}],"iTorj":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-dom/client":"lOjBx","./Header":"lhQzv","./Body":"5pK3b","react-router-dom":"9xmpe","./Aboutus":"d9JSF","./Contact":"c6A09","./Error":"g5bIt","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"iTorj":[function(require,module,exports) {
 "use strict";
 module.exports = require("ee51401569654d91");
 
@@ -27228,6 +27228,7 @@ try {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _reactRouterDom = require("react-router-dom");
 const Header = ()=>{
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         className: "header-container",
@@ -27300,1065 +27301,7 @@ $RefreshReg$(_c, "Header");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, "__esModule", {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === "default" || key === "__esModule" || Object.prototype.hasOwnProperty.call(dest, key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"km3Ru":[function(require,module,exports) {
-"use strict";
-var Refresh = require("7422ead32dcc1e6b");
-function debounce(func, delay) {
-    {
-        let timeout = undefined;
-        let lastTime = 0;
-        return function(args) {
-            // Call immediately if last call was more than the delay ago.
-            // Otherwise, set a timeout. This means the first call is fast
-            // (for the common case of a single update), and subsequent updates
-            // are batched.
-            let now = Date.now();
-            if (now - lastTime > delay) {
-                lastTime = now;
-                func.call(null, args);
-            } else {
-                clearTimeout(timeout);
-                timeout = setTimeout(function() {
-                    timeout = undefined;
-                    lastTime = Date.now();
-                    func.call(null, args);
-                }, delay);
-            }
-        };
-    }
-}
-var enqueueUpdate = debounce(function() {
-    Refresh.performReactRefresh();
-}, 30);
-// Everthing below is either adapted or copied from
-// https://github.com/facebook/metro/blob/61de16bd1edd7e738dd0311c89555a644023ab2d/packages/metro/src/lib/polyfills/require.js
-// MIT License - Copyright (c) Facebook, Inc. and its affiliates.
-module.exports.prelude = function(module1) {
-    window.$RefreshReg$ = function(type, id) {
-        Refresh.register(type, module1.id + " " + id);
-    };
-    window.$RefreshSig$ = Refresh.createSignatureFunctionForTransform;
-};
-module.exports.postlude = function(module1) {
-    if (isReactRefreshBoundary(module1.exports)) {
-        registerExportsForReactRefresh(module1);
-        if (module1.hot) {
-            module1.hot.dispose(function(data) {
-                if (Refresh.hasUnrecoverableErrors()) window.location.reload();
-                data.prevExports = module1.exports;
-            });
-            module1.hot.accept(function(getParents) {
-                var prevExports = module1.hot.data.prevExports;
-                var nextExports = module1.exports;
-                // Since we just executed the code for it, it's possible
-                // that the new exports make it ineligible for being a boundary.
-                var isNoLongerABoundary = !isReactRefreshBoundary(nextExports);
-                // It can also become ineligible if its exports are incompatible
-                // with the previous exports.
-                // For example, if you add/remove/change exports, we'll want
-                // to re-execute the importing modules, and force those components
-                // to re-render. Similarly, if you convert a class component
-                // to a function, we want to invalidate the boundary.
-                var didInvalidate = shouldInvalidateReactRefreshBoundary(prevExports, nextExports);
-                if (isNoLongerABoundary || didInvalidate) {
-                    // We'll be conservative. The only case in which we won't do a full
-                    // reload is if all parent modules are also refresh boundaries.
-                    // In that case we'll add them to the current queue.
-                    var parents = getParents();
-                    if (parents.length === 0) {
-                        // Looks like we bubbled to the root. Can't recover from that.
-                        window.location.reload();
-                        return;
-                    }
-                    return parents;
-                }
-                enqueueUpdate();
-            });
-        }
-    }
-};
-function isReactRefreshBoundary(exports) {
-    if (Refresh.isLikelyComponentType(exports)) return true;
-    if (exports == null || typeof exports !== "object") // Exit if we can't iterate over exports.
-    return false;
-    var hasExports = false;
-    var areAllExportsComponents = true;
-    let isESM = "__esModule" in exports;
-    for(var key in exports){
-        hasExports = true;
-        if (key === "__esModule") continue;
-        var desc = Object.getOwnPropertyDescriptor(exports, key);
-        if (desc && desc.get && !isESM) // Don't invoke getters for CJS as they may have side effects.
-        return false;
-        var exportValue = exports[key];
-        if (!Refresh.isLikelyComponentType(exportValue)) areAllExportsComponents = false;
-    }
-    return hasExports && areAllExportsComponents;
-}
-function shouldInvalidateReactRefreshBoundary(prevExports, nextExports) {
-    var prevSignature = getRefreshBoundarySignature(prevExports);
-    var nextSignature = getRefreshBoundarySignature(nextExports);
-    if (prevSignature.length !== nextSignature.length) return true;
-    for(var i = 0; i < nextSignature.length; i++){
-        if (prevSignature[i] !== nextSignature[i]) return true;
-    }
-    return false;
-}
-// When this signature changes, it's unsafe to stop at this refresh boundary.
-function getRefreshBoundarySignature(exports) {
-    var signature = [];
-    signature.push(Refresh.getFamilyByType(exports));
-    if (exports == null || typeof exports !== "object") // Exit if we can't iterate over exports.
-    // (This is important for legacy environments.)
-    return signature;
-    let isESM = "__esModule" in exports;
-    for(var key in exports){
-        if (key === "__esModule") continue;
-        var desc = Object.getOwnPropertyDescriptor(exports, key);
-        if (desc && desc.get && !isESM) continue;
-        var exportValue = exports[key];
-        signature.push(key);
-        signature.push(Refresh.getFamilyByType(exportValue));
-    }
-    return signature;
-}
-function registerExportsForReactRefresh(module1) {
-    var exports = module1.exports, id = module1.id;
-    Refresh.register(exports, id + " %exports%");
-    if (exports == null || typeof exports !== "object") // Exit if we can't iterate over exports.
-    // (This is important for legacy environments.)
-    return;
-    let isESM = "__esModule" in exports;
-    for(var key in exports){
-        var desc = Object.getOwnPropertyDescriptor(exports, key);
-        if (desc && desc.get && !isESM) continue;
-        var exportValue = exports[key];
-        var typeID = id + " %exports% " + key;
-        Refresh.register(exportValue, typeID);
-    }
-}
-
-},{"7422ead32dcc1e6b":"786KC"}],"5pK3b":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$5d06 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
-var prevRefreshReg = window.$RefreshReg$;
-var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$5d06.prelude(module);
-
-try {
-// import reslist  from "../constant/mockdata";
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _jsxDevRuntime = require("react/jsx-dev-runtime");
-var _restrauntCard = require("./RestrauntCard");
-var _restrauntCardDefault = parcelHelpers.interopDefault(_restrauntCard);
-var _react = require("react");
-var _shimmer = require("./Shimmer");
-var _shimmerDefault = parcelHelpers.interopDefault(_shimmer);
-var _s = $RefreshSig$();
-const Body = ()=>{
-    _s();
-    let [restaurantList, setRestaurantList] = (0, _react.useState)([]);
-    let [searchText, setSearchText] = (0, _react.useState)("");
-    let [filterRestaurant, setFilterRestaurant] = (0, _react.useState)([]);
-    (0, _react.useEffect)(()=>{
-        Fetchdata();
-    }, []);
-    let Fetchdata = async ()=>{
-        let res = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.0759837&lng=72.8776559&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
-        let data = await res.json();
-        setRestaurantList(data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-        setFilterRestaurant(data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-    };
-    if (restaurantList.length == 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _shimmerDefault.default), {}, void 0, false, {
-        fileName: "src/Body.js",
-        lineNumber: 30,
-        columnNumber: 3
-    }, undefined);
-    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        children: [
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                className: "filter",
-                children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
-                        className: "filter-btn",
-                        onClick: ()=>{
-                            let topRatedList = restaurantList.filter((res)=>res.info.avgRating > 4);
-                            setFilterRestaurant(topRatedList);
-                        },
-                        children: "Top rated restaurant"
-                    }, void 0, false, {
-                        fileName: "src/Body.js",
-                        lineNumber: 40,
-                        columnNumber: 3
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "search",
-                        children: [
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
-                                type: "text",
-                                className: "input-search",
-                                value: searchText,
-                                onChange: (e)=>{
-                                    setSearchText(e.target.value);
-                                }
-                            }, void 0, false, {
-                                fileName: "src/Body.js",
-                                lineNumber: 47,
-                                columnNumber: 5
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
-                                className: "search-btn",
-                                onClick: ()=>{
-                                    let search = restaurantList.filter((restaurant)=>restaurant.info.name.toLowerCase().includes(searchText.toLowerCase()));
-                                    setFilterRestaurant(search);
-                                },
-                                children: "search"
-                            }, void 0, false, {
-                                fileName: "src/Body.js",
-                                lineNumber: 49,
-                                columnNumber: 5
-                            }, undefined)
-                        ]
-                    }, void 0, true, {
-                        fileName: "src/Body.js",
-                        lineNumber: 46,
-                        columnNumber: 3
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/Body.js",
-                lineNumber: 39,
-                columnNumber: 1
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                className: "body",
-                children: filterRestaurant.map((restaurant)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _restrauntCardDefault.default), {
-                        ...restaurant
-                    }, restaurant.info.id, false, {
-                        fileName: "src/Body.js",
-                        lineNumber: 59,
-                        columnNumber: 43
-                    }, undefined))
-            }, void 0, false, {
-                fileName: "src/Body.js",
-                lineNumber: 57,
-                columnNumber: 9
-            }, undefined)
-        ]
-    }, void 0, true, {
-        fileName: "src/Body.js",
-        lineNumber: 37,
-        columnNumber: 7
-    }, undefined);
-};
-_s(Body, "eBOaBUmoNctOsWeNu53YbXVJcfw=");
-_c = Body;
-exports.default = Body;
-var _c;
-$RefreshReg$(_c, "Body");
-
-  $parcel$ReactRefreshHelpers$5d06.postlude(module);
-} finally {
-  window.$RefreshReg$ = prevRefreshReg;
-  window.$RefreshSig$ = prevRefreshSig;
-}
-},{"react/jsx-dev-runtime":"iTorj","./RestrauntCard":"dxEvu","react":"21dqq","./Shimmer":"iSNg0","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"dxEvu":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$862f = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
-var prevRefreshReg = window.$RefreshReg$;
-var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$862f.prelude(module);
-
-try {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _jsxDevRuntime = require("react/jsx-dev-runtime");
-const RestrauntCard = (resdata)=>{
-    const { info } = resdata;
-    const { name, cuisines, avgRating, costForTwo, sla, cloudinaryImageId } = info;
-    const { deliveryTime } = sla;
-    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        className: "res-container",
-        children: [
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
-                src: `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/${cloudinaryImageId}`,
-                alt: name
-            }, void 0, false, {
-                fileName: "src/RestrauntCard.js",
-                lineNumber: 15,
-                columnNumber: 9
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h4", {
-                children: name
-            }, void 0, false, {
-                fileName: "src/RestrauntCard.js",
-                lineNumber: 16,
-                columnNumber: 9
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h4", {
-                children: cuisines.join(", ")
-            }, void 0, false, {
-                fileName: "src/RestrauntCard.js",
-                lineNumber: 17,
-                columnNumber: 9
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h4", {
-                children: avgRating
-            }, void 0, false, {
-                fileName: "src/RestrauntCard.js",
-                lineNumber: 18,
-                columnNumber: 9
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h4", {
-                children: costForTwo
-            }, void 0, false, {
-                fileName: "src/RestrauntCard.js",
-                lineNumber: 19,
-                columnNumber: 9
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h4", {
-                children: `delivery time - ${deliveryTime} min`
-            }, void 0, false, {
-                fileName: "src/RestrauntCard.js",
-                lineNumber: 21,
-                columnNumber: 9
-            }, undefined)
-        ]
-    }, void 0, true, {
-        fileName: "src/RestrauntCard.js",
-        lineNumber: 12,
-        columnNumber: 9
-    }, undefined);
-};
-_c = RestrauntCard;
-exports.default = RestrauntCard;
-var _c;
-$RefreshReg$(_c, "RestrauntCard");
-
-  $parcel$ReactRefreshHelpers$862f.postlude(module);
-} finally {
-  window.$RefreshReg$ = prevRefreshReg;
-  window.$RefreshSig$ = prevRefreshSig;
-}
-},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"iSNg0":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$64e1 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
-var prevRefreshReg = window.$RefreshReg$;
-var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$64e1.prelude(module);
-
-try {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _jsxDevRuntime = require("react/jsx-dev-runtime");
-const Shimmer = ()=>{
-    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        className: "container",
-        children: [
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                className: "card",
-                children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "shimmer"
-                    }, void 0, false, {
-                        fileName: "src/Shimmer.js",
-                        lineNumber: 6,
-                        columnNumber: 11
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "content",
-                        children: [
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
-                                src: "your_image_url.jpg",
-                                alt: "Food Image"
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 8,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
-                                children: "Delicious Food"
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 9,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                                children: "Description of the food item."
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 10,
-                                columnNumber: 13
-                            }, undefined)
-                        ]
-                    }, void 0, true, {
-                        fileName: "src/Shimmer.js",
-                        lineNumber: 7,
-                        columnNumber: 11
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/Shimmer.js",
-                lineNumber: 5,
-                columnNumber: 9
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                className: "card",
-                children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "shimmer"
-                    }, void 0, false, {
-                        fileName: "src/Shimmer.js",
-                        lineNumber: 14,
-                        columnNumber: 11
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "content",
-                        children: [
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
-                                src: "your_image_url.jpg",
-                                alt: "Food Image"
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 16,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
-                                children: "Delicious Food"
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 17,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                                children: "Description of the food item."
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 18,
-                                columnNumber: 13
-                            }, undefined)
-                        ]
-                    }, void 0, true, {
-                        fileName: "src/Shimmer.js",
-                        lineNumber: 15,
-                        columnNumber: 11
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/Shimmer.js",
-                lineNumber: 13,
-                columnNumber: 9
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                className: "card",
-                children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "shimmer"
-                    }, void 0, false, {
-                        fileName: "src/Shimmer.js",
-                        lineNumber: 22,
-                        columnNumber: 11
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "content",
-                        children: [
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
-                                src: "your_image_url.jpg",
-                                alt: "Food Image"
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 24,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
-                                children: "Delicious Food"
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 25,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                                children: "Description of the food item."
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 26,
-                                columnNumber: 13
-                            }, undefined)
-                        ]
-                    }, void 0, true, {
-                        fileName: "src/Shimmer.js",
-                        lineNumber: 23,
-                        columnNumber: 11
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/Shimmer.js",
-                lineNumber: 21,
-                columnNumber: 9
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                className: "card",
-                children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "shimmer"
-                    }, void 0, false, {
-                        fileName: "src/Shimmer.js",
-                        lineNumber: 30,
-                        columnNumber: 11
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "content",
-                        children: [
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
-                                src: "your_image_url.jpg",
-                                alt: "Food Image"
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 32,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
-                                children: "Delicious Food"
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 33,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                                children: "Description of the food item."
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 34,
-                                columnNumber: 13
-                            }, undefined)
-                        ]
-                    }, void 0, true, {
-                        fileName: "src/Shimmer.js",
-                        lineNumber: 31,
-                        columnNumber: 11
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/Shimmer.js",
-                lineNumber: 29,
-                columnNumber: 9
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                className: "card",
-                children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "shimmer"
-                    }, void 0, false, {
-                        fileName: "src/Shimmer.js",
-                        lineNumber: 38,
-                        columnNumber: 11
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "content",
-                        children: [
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
-                                src: "your_image_url.jpg",
-                                alt: "Food Image"
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 40,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
-                                children: "Delicious Food"
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 41,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                                children: "Description of the food item."
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 42,
-                                columnNumber: 13
-                            }, undefined)
-                        ]
-                    }, void 0, true, {
-                        fileName: "src/Shimmer.js",
-                        lineNumber: 39,
-                        columnNumber: 11
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/Shimmer.js",
-                lineNumber: 37,
-                columnNumber: 9
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                className: "card",
-                children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "shimmer"
-                    }, void 0, false, {
-                        fileName: "src/Shimmer.js",
-                        lineNumber: 46,
-                        columnNumber: 11
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "content",
-                        children: [
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
-                                src: "your_image_url.jpg",
-                                alt: "Food Image"
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 48,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
-                                children: "Delicious Food"
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 49,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                                children: "Description of the food item."
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 50,
-                                columnNumber: 13
-                            }, undefined)
-                        ]
-                    }, void 0, true, {
-                        fileName: "src/Shimmer.js",
-                        lineNumber: 47,
-                        columnNumber: 11
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/Shimmer.js",
-                lineNumber: 45,
-                columnNumber: 9
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                className: "card",
-                children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "shimmer"
-                    }, void 0, false, {
-                        fileName: "src/Shimmer.js",
-                        lineNumber: 54,
-                        columnNumber: 11
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "content",
-                        children: [
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
-                                src: "your_image_url.jpg",
-                                alt: "Food Image"
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 56,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
-                                children: "Delicious Food"
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 57,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                                children: "Description of the food item."
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 58,
-                                columnNumber: 13
-                            }, undefined)
-                        ]
-                    }, void 0, true, {
-                        fileName: "src/Shimmer.js",
-                        lineNumber: 55,
-                        columnNumber: 11
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/Shimmer.js",
-                lineNumber: 53,
-                columnNumber: 9
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                className: "card",
-                children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "shimmer"
-                    }, void 0, false, {
-                        fileName: "src/Shimmer.js",
-                        lineNumber: 62,
-                        columnNumber: 11
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "content",
-                        children: [
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
-                                src: "your_image_url.jpg",
-                                alt: "Food Image"
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 64,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
-                                children: "Delicious Food"
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 65,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                                children: "Description of the food item."
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 66,
-                                columnNumber: 13
-                            }, undefined)
-                        ]
-                    }, void 0, true, {
-                        fileName: "src/Shimmer.js",
-                        lineNumber: 63,
-                        columnNumber: 11
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/Shimmer.js",
-                lineNumber: 61,
-                columnNumber: 9
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                className: "card",
-                children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "shimmer"
-                    }, void 0, false, {
-                        fileName: "src/Shimmer.js",
-                        lineNumber: 70,
-                        columnNumber: 11
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "content",
-                        children: [
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
-                                src: "your_image_url.jpg",
-                                alt: "Food Image"
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 72,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
-                                children: "Delicious Food"
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 73,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                                children: "Description of the food item."
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 74,
-                                columnNumber: 13
-                            }, undefined)
-                        ]
-                    }, void 0, true, {
-                        fileName: "src/Shimmer.js",
-                        lineNumber: 71,
-                        columnNumber: 11
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/Shimmer.js",
-                lineNumber: 69,
-                columnNumber: 9
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                className: "card",
-                children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "shimmer"
-                    }, void 0, false, {
-                        fileName: "src/Shimmer.js",
-                        lineNumber: 78,
-                        columnNumber: 11
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "content",
-                        children: [
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
-                                src: "your_image_url.jpg",
-                                alt: "Food Image"
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 80,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
-                                children: "Delicious Food"
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 81,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                                children: "Description of the food item."
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 82,
-                                columnNumber: 13
-                            }, undefined)
-                        ]
-                    }, void 0, true, {
-                        fileName: "src/Shimmer.js",
-                        lineNumber: 79,
-                        columnNumber: 11
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/Shimmer.js",
-                lineNumber: 77,
-                columnNumber: 9
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                className: "card",
-                children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "shimmer"
-                    }, void 0, false, {
-                        fileName: "src/Shimmer.js",
-                        lineNumber: 86,
-                        columnNumber: 11
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "content",
-                        children: [
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
-                                src: "your_image_url.jpg",
-                                alt: "Food Image"
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 88,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
-                                children: "Delicious Food"
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 89,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                                children: "Description of the food item."
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 90,
-                                columnNumber: 13
-                            }, undefined)
-                        ]
-                    }, void 0, true, {
-                        fileName: "src/Shimmer.js",
-                        lineNumber: 87,
-                        columnNumber: 11
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/Shimmer.js",
-                lineNumber: 85,
-                columnNumber: 9
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                className: "card",
-                children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "shimmer"
-                    }, void 0, false, {
-                        fileName: "src/Shimmer.js",
-                        lineNumber: 94,
-                        columnNumber: 11
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "content",
-                        children: [
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
-                                src: "your_image_url.jpg",
-                                alt: "Food Image"
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 96,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
-                                children: "Delicious Food"
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 97,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                                children: "Description of the food item."
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 98,
-                                columnNumber: 13
-                            }, undefined)
-                        ]
-                    }, void 0, true, {
-                        fileName: "src/Shimmer.js",
-                        lineNumber: 95,
-                        columnNumber: 11
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/Shimmer.js",
-                lineNumber: 93,
-                columnNumber: 9
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                className: "card",
-                children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "shimmer"
-                    }, void 0, false, {
-                        fileName: "src/Shimmer.js",
-                        lineNumber: 102,
-                        columnNumber: 11
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "content",
-                        children: [
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
-                                src: "your_image_url.jpg",
-                                alt: "Food Image"
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 104,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
-                                children: "Delicious Food"
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 105,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                                children: "Description of the food item."
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 106,
-                                columnNumber: 13
-                            }, undefined)
-                        ]
-                    }, void 0, true, {
-                        fileName: "src/Shimmer.js",
-                        lineNumber: 103,
-                        columnNumber: 11
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/Shimmer.js",
-                lineNumber: 101,
-                columnNumber: 9
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                className: "card",
-                children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "shimmer"
-                    }, void 0, false, {
-                        fileName: "src/Shimmer.js",
-                        lineNumber: 110,
-                        columnNumber: 11
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "content",
-                        children: [
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
-                                src: "your_image_url.jpg",
-                                alt: "Food Image"
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 112,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
-                                children: "Delicious Food"
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 113,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                                children: "Description of the food item."
-                            }, void 0, false, {
-                                fileName: "src/Shimmer.js",
-                                lineNumber: 114,
-                                columnNumber: 13
-                            }, undefined)
-                        ]
-                    }, void 0, true, {
-                        fileName: "src/Shimmer.js",
-                        lineNumber: 111,
-                        columnNumber: 11
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/Shimmer.js",
-                lineNumber: 109,
-                columnNumber: 9
-            }, undefined)
-        ]
-    }, void 0, true, {
-        fileName: "src/Shimmer.js",
-        lineNumber: 3,
-        columnNumber: 9
-    }, undefined);
-};
-_c = Shimmer;
-exports.default = Shimmer;
-var _c;
-$RefreshReg$(_c, "Shimmer");
-
-  $parcel$ReactRefreshHelpers$64e1.postlude(module);
-} finally {
-  window.$RefreshReg$ = prevRefreshReg;
-  window.$RefreshSig$ = prevRefreshSig;
-}
-},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"9xmpe":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react-router-dom":"9xmpe","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"9xmpe":[function(require,module,exports) {
 /**
  * React Router DOM v6.21.3
  *
@@ -34835,7 +33778,1128 @@ function persistAppliedTransitions(_window, transitions) {
     }
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"d9JSF":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, "__esModule", {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === "default" || key === "__esModule" || Object.prototype.hasOwnProperty.call(dest, key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"km3Ru":[function(require,module,exports) {
+"use strict";
+var Refresh = require("7422ead32dcc1e6b");
+function debounce(func, delay) {
+    {
+        let timeout = undefined;
+        let lastTime = 0;
+        return function(args) {
+            // Call immediately if last call was more than the delay ago.
+            // Otherwise, set a timeout. This means the first call is fast
+            // (for the common case of a single update), and subsequent updates
+            // are batched.
+            let now = Date.now();
+            if (now - lastTime > delay) {
+                lastTime = now;
+                func.call(null, args);
+            } else {
+                clearTimeout(timeout);
+                timeout = setTimeout(function() {
+                    timeout = undefined;
+                    lastTime = Date.now();
+                    func.call(null, args);
+                }, delay);
+            }
+        };
+    }
+}
+var enqueueUpdate = debounce(function() {
+    Refresh.performReactRefresh();
+}, 30);
+// Everthing below is either adapted or copied from
+// https://github.com/facebook/metro/blob/61de16bd1edd7e738dd0311c89555a644023ab2d/packages/metro/src/lib/polyfills/require.js
+// MIT License - Copyright (c) Facebook, Inc. and its affiliates.
+module.exports.prelude = function(module1) {
+    window.$RefreshReg$ = function(type, id) {
+        Refresh.register(type, module1.id + " " + id);
+    };
+    window.$RefreshSig$ = Refresh.createSignatureFunctionForTransform;
+};
+module.exports.postlude = function(module1) {
+    if (isReactRefreshBoundary(module1.exports)) {
+        registerExportsForReactRefresh(module1);
+        if (module1.hot) {
+            module1.hot.dispose(function(data) {
+                if (Refresh.hasUnrecoverableErrors()) window.location.reload();
+                data.prevExports = module1.exports;
+            });
+            module1.hot.accept(function(getParents) {
+                var prevExports = module1.hot.data.prevExports;
+                var nextExports = module1.exports;
+                // Since we just executed the code for it, it's possible
+                // that the new exports make it ineligible for being a boundary.
+                var isNoLongerABoundary = !isReactRefreshBoundary(nextExports);
+                // It can also become ineligible if its exports are incompatible
+                // with the previous exports.
+                // For example, if you add/remove/change exports, we'll want
+                // to re-execute the importing modules, and force those components
+                // to re-render. Similarly, if you convert a class component
+                // to a function, we want to invalidate the boundary.
+                var didInvalidate = shouldInvalidateReactRefreshBoundary(prevExports, nextExports);
+                if (isNoLongerABoundary || didInvalidate) {
+                    // We'll be conservative. The only case in which we won't do a full
+                    // reload is if all parent modules are also refresh boundaries.
+                    // In that case we'll add them to the current queue.
+                    var parents = getParents();
+                    if (parents.length === 0) {
+                        // Looks like we bubbled to the root. Can't recover from that.
+                        window.location.reload();
+                        return;
+                    }
+                    return parents;
+                }
+                enqueueUpdate();
+            });
+        }
+    }
+};
+function isReactRefreshBoundary(exports) {
+    if (Refresh.isLikelyComponentType(exports)) return true;
+    if (exports == null || typeof exports !== "object") // Exit if we can't iterate over exports.
+    return false;
+    var hasExports = false;
+    var areAllExportsComponents = true;
+    let isESM = "__esModule" in exports;
+    for(var key in exports){
+        hasExports = true;
+        if (key === "__esModule") continue;
+        var desc = Object.getOwnPropertyDescriptor(exports, key);
+        if (desc && desc.get && !isESM) // Don't invoke getters for CJS as they may have side effects.
+        return false;
+        var exportValue = exports[key];
+        if (!Refresh.isLikelyComponentType(exportValue)) areAllExportsComponents = false;
+    }
+    return hasExports && areAllExportsComponents;
+}
+function shouldInvalidateReactRefreshBoundary(prevExports, nextExports) {
+    var prevSignature = getRefreshBoundarySignature(prevExports);
+    var nextSignature = getRefreshBoundarySignature(nextExports);
+    if (prevSignature.length !== nextSignature.length) return true;
+    for(var i = 0; i < nextSignature.length; i++){
+        if (prevSignature[i] !== nextSignature[i]) return true;
+    }
+    return false;
+}
+// When this signature changes, it's unsafe to stop at this refresh boundary.
+function getRefreshBoundarySignature(exports) {
+    var signature = [];
+    signature.push(Refresh.getFamilyByType(exports));
+    if (exports == null || typeof exports !== "object") // Exit if we can't iterate over exports.
+    // (This is important for legacy environments.)
+    return signature;
+    let isESM = "__esModule" in exports;
+    for(var key in exports){
+        if (key === "__esModule") continue;
+        var desc = Object.getOwnPropertyDescriptor(exports, key);
+        if (desc && desc.get && !isESM) continue;
+        var exportValue = exports[key];
+        signature.push(key);
+        signature.push(Refresh.getFamilyByType(exportValue));
+    }
+    return signature;
+}
+function registerExportsForReactRefresh(module1) {
+    var exports = module1.exports, id = module1.id;
+    Refresh.register(exports, id + " %exports%");
+    if (exports == null || typeof exports !== "object") // Exit if we can't iterate over exports.
+    // (This is important for legacy environments.)
+    return;
+    let isESM = "__esModule" in exports;
+    for(var key in exports){
+        var desc = Object.getOwnPropertyDescriptor(exports, key);
+        if (desc && desc.get && !isESM) continue;
+        var exportValue = exports[key];
+        var typeID = id + " %exports% " + key;
+        Refresh.register(exportValue, typeID);
+    }
+}
+
+},{"7422ead32dcc1e6b":"786KC"}],"5pK3b":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$5d06 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$5d06.prelude(module);
+
+try {
+// import reslist  from "../constant/mockdata";
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _restrauntCard = require("./RestrauntCard");
+var _restrauntCardDefault = parcelHelpers.interopDefault(_restrauntCard);
+var _react = require("react");
+var _shimmer = require("./Shimmer");
+var _shimmerDefault = parcelHelpers.interopDefault(_shimmer);
+var _mind = require("./Mind");
+var _mindDefault = parcelHelpers.interopDefault(_mind);
+var _s = $RefreshSig$();
+const Body = ()=>{
+    _s();
+    let [restaurantList, setRestaurantList] = (0, _react.useState)([]);
+    let [searchText, setSearchText] = (0, _react.useState)("");
+    let [filterRestaurant, setFilterRestaurant] = (0, _react.useState)([]);
+    let [headingitems, setHeadingitems] = (0, _react.useState)([]);
+    (0, _react.useEffect)(()=>{
+        Fetchdata();
+    }, []);
+    let Fetchdata = async ()=>{
+        let res = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.0759837&lng=72.8776559&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+        let data = await res.json();
+        setRestaurantList(data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        setFilterRestaurant(data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        setHeadingitems(data?.data?.cards[0].card?.card?.imageGridCards.info);
+    };
+    if (restaurantList.length == 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _shimmerDefault.default), {}, void 0, false, {
+        fileName: "src/Body.js",
+        lineNumber: 32,
+        columnNumber: 3
+    }, undefined);
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        children: [
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "filter",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                        className: "filter-btn",
+                        onClick: ()=>{
+                            let topRatedList = restaurantList.filter((res)=>res.info.avgRating > 4);
+                            setFilterRestaurant(topRatedList);
+                        },
+                        children: "Top rated restaurant"
+                    }, void 0, false, {
+                        fileName: "src/Body.js",
+                        lineNumber: 42,
+                        columnNumber: 3
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "search",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                                type: "text",
+                                className: "input-search",
+                                value: searchText,
+                                onChange: (e)=>{
+                                    setSearchText(e.target.value);
+                                }
+                            }, void 0, false, {
+                                fileName: "src/Body.js",
+                                lineNumber: 49,
+                                columnNumber: 5
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                                className: "search-btn",
+                                onClick: ()=>{
+                                    let search = restaurantList.filter((restaurant)=>restaurant.info.name.toLowerCase().includes(searchText.toLowerCase()));
+                                    setFilterRestaurant(search);
+                                },
+                                children: "search"
+                            }, void 0, false, {
+                                fileName: "src/Body.js",
+                                lineNumber: 51,
+                                columnNumber: 5
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Body.js",
+                        lineNumber: 48,
+                        columnNumber: 3
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/Body.js",
+                lineNumber: 41,
+                columnNumber: 1
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                children: "What on your minds..."
+            }, void 0, false, {
+                fileName: "src/Body.js",
+                lineNumber: 58,
+                columnNumber: 1
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "mind_container",
+                children: headingitems.map((el)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _mindDefault.default), {
+                        ...el
+                    }, el.id, false, {
+                        fileName: "src/Body.js",
+                        lineNumber: 61,
+                        columnNumber: 27
+                    }, undefined))
+            }, void 0, false, {
+                fileName: "src/Body.js",
+                lineNumber: 59,
+                columnNumber: 1
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "body",
+                children: filterRestaurant.map((restaurant)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _restrauntCardDefault.default), {
+                        ...restaurant
+                    }, restaurant.info.id, false, {
+                        fileName: "src/Body.js",
+                        lineNumber: 68,
+                        columnNumber: 43
+                    }, undefined))
+            }, void 0, false, {
+                fileName: "src/Body.js",
+                lineNumber: 65,
+                columnNumber: 9
+            }, undefined)
+        ]
+    }, void 0, true, {
+        fileName: "src/Body.js",
+        lineNumber: 39,
+        columnNumber: 7
+    }, undefined);
+};
+_s(Body, "Vi+alPRf7uq7CuZQ3P3UsS/tDuU=");
+_c = Body;
+exports.default = Body;
+var _c;
+$RefreshReg$(_c, "Body");
+
+  $parcel$ReactRefreshHelpers$5d06.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","./RestrauntCard":"dxEvu","react":"21dqq","./Shimmer":"iSNg0","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./Mind":"h44Y5"}],"dxEvu":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$862f = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$862f.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+const RestrauntCard = (resdata)=>{
+    const { info } = resdata;
+    const { name, cuisines, avgRating, costForTwo, sla, cloudinaryImageId } = info;
+    const { deliveryTime } = sla;
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        className: "res-container",
+        children: [
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                src: `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/${cloudinaryImageId}`,
+                alt: name
+            }, void 0, false, {
+                fileName: "src/RestrauntCard.js",
+                lineNumber: 15,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h4", {
+                children: name
+            }, void 0, false, {
+                fileName: "src/RestrauntCard.js",
+                lineNumber: 16,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h4", {
+                children: cuisines.join(", ")
+            }, void 0, false, {
+                fileName: "src/RestrauntCard.js",
+                lineNumber: 17,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h4", {
+                children: avgRating
+            }, void 0, false, {
+                fileName: "src/RestrauntCard.js",
+                lineNumber: 18,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h4", {
+                children: costForTwo
+            }, void 0, false, {
+                fileName: "src/RestrauntCard.js",
+                lineNumber: 19,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h4", {
+                children: `delivery time - ${deliveryTime} min`
+            }, void 0, false, {
+                fileName: "src/RestrauntCard.js",
+                lineNumber: 21,
+                columnNumber: 9
+            }, undefined)
+        ]
+    }, void 0, true, {
+        fileName: "src/RestrauntCard.js",
+        lineNumber: 12,
+        columnNumber: 9
+    }, undefined);
+};
+_c = RestrauntCard;
+exports.default = RestrauntCard;
+var _c;
+$RefreshReg$(_c, "RestrauntCard");
+
+  $parcel$ReactRefreshHelpers$862f.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"iSNg0":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$64e1 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$64e1.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+const Shimmer = ()=>{
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        className: "container",
+        children: [
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "card",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "shimmer"
+                    }, void 0, false, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 6,
+                        columnNumber: 11
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "content",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                                src: "your_image_url.jpg",
+                                alt: "Food Image"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 8,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                                children: "Delicious Food"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 9,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                children: "Description of the food item."
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 10,
+                                columnNumber: 13
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 7,
+                        columnNumber: 11
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/Shimmer.js",
+                lineNumber: 5,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "card",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "shimmer"
+                    }, void 0, false, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 14,
+                        columnNumber: 11
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "content",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                                src: "your_image_url.jpg",
+                                alt: "Food Image"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 16,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                                children: "Delicious Food"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 17,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                children: "Description of the food item."
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 18,
+                                columnNumber: 13
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 15,
+                        columnNumber: 11
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/Shimmer.js",
+                lineNumber: 13,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "card",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "shimmer"
+                    }, void 0, false, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 22,
+                        columnNumber: 11
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "content",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                                src: "your_image_url.jpg",
+                                alt: "Food Image"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 24,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                                children: "Delicious Food"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 25,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                children: "Description of the food item."
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 26,
+                                columnNumber: 13
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 23,
+                        columnNumber: 11
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/Shimmer.js",
+                lineNumber: 21,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "card",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "shimmer"
+                    }, void 0, false, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 30,
+                        columnNumber: 11
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "content",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                                src: "your_image_url.jpg",
+                                alt: "Food Image"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 32,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                                children: "Delicious Food"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 33,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                children: "Description of the food item."
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 34,
+                                columnNumber: 13
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 31,
+                        columnNumber: 11
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/Shimmer.js",
+                lineNumber: 29,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "card",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "shimmer"
+                    }, void 0, false, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 38,
+                        columnNumber: 11
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "content",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                                src: "your_image_url.jpg",
+                                alt: "Food Image"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 40,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                                children: "Delicious Food"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 41,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                children: "Description of the food item."
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 42,
+                                columnNumber: 13
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 39,
+                        columnNumber: 11
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/Shimmer.js",
+                lineNumber: 37,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "card",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "shimmer"
+                    }, void 0, false, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 46,
+                        columnNumber: 11
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "content",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                                src: "your_image_url.jpg",
+                                alt: "Food Image"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 48,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                                children: "Delicious Food"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 49,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                children: "Description of the food item."
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 50,
+                                columnNumber: 13
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 47,
+                        columnNumber: 11
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/Shimmer.js",
+                lineNumber: 45,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "card",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "shimmer"
+                    }, void 0, false, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 54,
+                        columnNumber: 11
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "content",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                                src: "your_image_url.jpg",
+                                alt: "Food Image"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 56,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                                children: "Delicious Food"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 57,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                children: "Description of the food item."
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 58,
+                                columnNumber: 13
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 55,
+                        columnNumber: 11
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/Shimmer.js",
+                lineNumber: 53,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "card",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "shimmer"
+                    }, void 0, false, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 62,
+                        columnNumber: 11
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "content",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                                src: "your_image_url.jpg",
+                                alt: "Food Image"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 64,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                                children: "Delicious Food"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 65,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                children: "Description of the food item."
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 66,
+                                columnNumber: 13
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 63,
+                        columnNumber: 11
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/Shimmer.js",
+                lineNumber: 61,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "card",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "shimmer"
+                    }, void 0, false, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 70,
+                        columnNumber: 11
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "content",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                                src: "your_image_url.jpg",
+                                alt: "Food Image"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 72,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                                children: "Delicious Food"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 73,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                children: "Description of the food item."
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 74,
+                                columnNumber: 13
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 71,
+                        columnNumber: 11
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/Shimmer.js",
+                lineNumber: 69,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "card",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "shimmer"
+                    }, void 0, false, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 78,
+                        columnNumber: 11
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "content",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                                src: "your_image_url.jpg",
+                                alt: "Food Image"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 80,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                                children: "Delicious Food"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 81,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                children: "Description of the food item."
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 82,
+                                columnNumber: 13
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 79,
+                        columnNumber: 11
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/Shimmer.js",
+                lineNumber: 77,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "card",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "shimmer"
+                    }, void 0, false, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 86,
+                        columnNumber: 11
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "content",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                                src: "your_image_url.jpg",
+                                alt: "Food Image"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 88,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                                children: "Delicious Food"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 89,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                children: "Description of the food item."
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 90,
+                                columnNumber: 13
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 87,
+                        columnNumber: 11
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/Shimmer.js",
+                lineNumber: 85,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "card",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "shimmer"
+                    }, void 0, false, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 94,
+                        columnNumber: 11
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "content",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                                src: "your_image_url.jpg",
+                                alt: "Food Image"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 96,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                                children: "Delicious Food"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 97,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                children: "Description of the food item."
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 98,
+                                columnNumber: 13
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 95,
+                        columnNumber: 11
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/Shimmer.js",
+                lineNumber: 93,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "card",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "shimmer"
+                    }, void 0, false, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 102,
+                        columnNumber: 11
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "content",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                                src: "your_image_url.jpg",
+                                alt: "Food Image"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 104,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                                children: "Delicious Food"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 105,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                children: "Description of the food item."
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 106,
+                                columnNumber: 13
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 103,
+                        columnNumber: 11
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/Shimmer.js",
+                lineNumber: 101,
+                columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "card",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "shimmer"
+                    }, void 0, false, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 110,
+                        columnNumber: 11
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "content",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                                src: "your_image_url.jpg",
+                                alt: "Food Image"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 112,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                                children: "Delicious Food"
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 113,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                children: "Description of the food item."
+                            }, void 0, false, {
+                                fileName: "src/Shimmer.js",
+                                lineNumber: 114,
+                                columnNumber: 13
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/Shimmer.js",
+                        lineNumber: 111,
+                        columnNumber: 11
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/Shimmer.js",
+                lineNumber: 109,
+                columnNumber: 9
+            }, undefined)
+        ]
+    }, void 0, true, {
+        fileName: "src/Shimmer.js",
+        lineNumber: 3,
+        columnNumber: 9
+    }, undefined);
+};
+_c = Shimmer;
+exports.default = Shimmer;
+var _c;
+$RefreshReg$(_c, "Shimmer");
+
+  $parcel$ReactRefreshHelpers$64e1.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"h44Y5":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$fa1b = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$fa1b.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+const Mind = (card)=>{
+    const { imageId } = card;
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        className: "mind_card",
+        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+            src: ` https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/${imageId}`
+        }, void 0, false, {
+            fileName: "src/Mind.js",
+            lineNumber: 14,
+            columnNumber: 13
+        }, undefined)
+    }, void 0, false, {
+        fileName: "src/Mind.js",
+        lineNumber: 12,
+        columnNumber: 13
+    }, undefined);
+};
+_c = Mind;
+exports.default = Mind;
+var _c;
+$RefreshReg$(_c, "Mind");
+
+  $parcel$ReactRefreshHelpers$fa1b.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"d9JSF":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$a8fd = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;

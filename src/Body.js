@@ -3,6 +3,7 @@
 import RestrauntCard from "./RestrauntCard";
 import { useState , useEffect} from "react";
 import Shimmer from "./Shimmer";
+import Mind from "./Mind";
 
 
 
@@ -12,7 +13,7 @@ const Body=()=>{
   let  [restaurantList,setRestaurantList]=useState([]);
  let [searchText,setSearchText]=useState("");
  let [filterRestaurant,setFilterRestaurant]=useState([]);
-
+let [headingitems,setHeadingitems]=useState([])
   useEffect(()=>{
     Fetchdata();
      },[])
@@ -23,6 +24,7 @@ const Body=()=>{
 
   setRestaurantList(data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
 setFilterRestaurant(data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+setHeadingitems(data?.data?.cards[0].card?.card?.imageGridCards.info)
 }
 
 if(restaurantList.length==0){
@@ -53,11 +55,18 @@ setFilterRestaurant(search)
     }}>search</button>
   </div>
 </div>
+<h1>What on your minds...</h1>
+<div className="mind_container">
+
+  {headingitems.map((el)=><Mind key={el.id} {...el}/>)}</div>
+   
+
 
         <div className="body">
+
       
       {filterRestaurant.map((restaurant)=><RestrauntCard key={restaurant.info.id} {...restaurant}/>)}
-   
+ 
         </div>
    
       </div>
